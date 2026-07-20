@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth 2.0 로그인 데모</title>
+    <style>
+        body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f5f4ef; display: flex; min-height: 100vh; align-items: center; justify-content: center; margin: 0; }
+        .card { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.08); width: 320px; text-align: center; }
+        h1 { font-size: 20px; margin: 0 0 4px; }
+        p { color: #666; font-size: 13px; margin: 0 0 24px; }
+        a.btn { display: block; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 12px; color: #191919; }
+        .google { background: #fff; border: 1px solid #ddd; }
+        .kakao { background: #FEE500; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>소셜 로그인</h1>
+    <p>OAuth 2.0 Authorization Code Flow 데모</p>
+    <!-- ① 로그인 버튼 클릭 → 프레임워크 기본 인가 요청 엔드포인트로 이동 -->
+    <a class="btn google" href="/oauth2/authorization/google">Google로 계속하기</a>
+    <a class="btn kakao" href="/oauth2/authorization/kakao">Kakao로 계속하기</a>
+</div>
+</body>
+</html>
