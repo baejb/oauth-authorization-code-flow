@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.aistudy'
 version = '0.0.1-SNAPSHOT'
-description = 'OAuth 2.0 study project - base Spring Boot skeleton'
+description = 'OAuth 2.0 Authorization Code Flow study (Google / Kakao) with Spring Security'
 
 java {
     toolchain {
@@ -19,9 +19,23 @@ repositories {
 }
 
 dependencies {
+    // Web + Security + OAuth2 Client (Authorization Code flow, PKCE, state 자동 처리)
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // 사용자 영속화 (flow ⑧ DB 조회/가입)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    runtimeOnly 'com.h2database:h2'
+
+    // 우리 서비스 JWT 발급/검증 (flow ⑧)
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

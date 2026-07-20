@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 성공</title>
+    <style>
+        body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f5f4ef; padding: 40px; }
+        .card { background: #fff; max-width: 640px; margin: 0 auto; padding: 32px; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+        h1 { font-size: 20px; }
+        pre { background: #f1efe8; padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; word-break: break-all; }
+        button { padding: 10px 16px; border: 0; border-radius: 8px; background: #191919; color: #fff; cursor: pointer; }
+        .err { color: #b00020; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>로그인 처리 결과</h1>
+    <div id="content"></div>
+</div>
+<script>
+    // 성공 핸들러가 ?token= 로, 실패 핸들러가 ?error= 로 리다이렉트한다 (flow ⑧)
+    const params = new URLSearchParams(location.search);
+    const token = params.get('token');
+    const error = params.get('error');
+    const content = document.getElementById('content');
+
+    if (error) {
+        content.innerHTML = '<p class="err">로그인 실패: ' + error + '</p>';
+    } else if (token) {
+        content.innerHTML =
+            '<p>발급된 우리 서비스 JWT:</p><pre id="t"></pre>' +
+            '<button id="call">이 토큰으로 /api/me 호출</button><pre id="me"></pre>';
+        document.getElementById('t').textContent = token;
+        document.getElementById('call').addEventListener('click', async () => {
+            const res = await fetch('/api/me', { headers: { 'Authorization': 'Bearer ' + token } });
+            document.getElementById('me').textContent =
+                res.ok ? JSON.stringify(await res.json(), null, 2) : ('요청 실패: HTTP ' + res.status);
+        });
+    } else {
+        content.innerHTML = '<p>표시할 결과가 없습니다. <a href="/">처음으로</a></p>';
+    }
+</script>
+</body>
+</html>
